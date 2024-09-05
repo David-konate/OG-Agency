@@ -1,0 +1,62 @@
+// Variables de couleurs principales
+$primary-color: #2b2d42; // Gris-bleu profond
+$secondary-color: #8d99ae; // Gris clair
+$accent-color: #ef233c; // Rouge accent subtil
+$background-color: #edf2f4; // Gris très clair, presque blanc
+$background-color-dark: #1a1c29; // Gris très foncé pour le mode sombre
+$text-color: #2b2d42; // Couleur du texte principal
+$text-color-light: #ffffff; // Couleur du texte clair (pour fonds sombres)
+
+// Couleurs pour les bordures et séparateurs
+$border-color: #d3d3d3; // Gris doux pour les bordures
+$divider-color: #bfbfbf; // Gris pour les séparateurs
+
+// Couleurs pour le mode sombre
+$primary-color-dark: #1a1c29; // Couleur primaire en mode sombre
+$secondary-color-dark: #30344a; // Couleur secondaire en mode sombre
+$accent-color-dark: #d90429; // Accent en mode sombre
+
+// Variables typographiques
+$font-family-base: "Inter", sans-serif;
+$font-size-base: 16px;
+$line-height-base: 1.6;
+
+// Espacements
+$section-gap: 160px;
+$container-padding: 2rem;
+
+// Application des variables SCSS dans les éléments
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  color: $text-color;
+  background-color: $background-color;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+a {
+  color: $accent-color;
+  text-decoration: none;
+  transition: color 0.3s;
+
+  &:hover {
+    color: darken($accent-color, 10%);
+  }
+}
+
+// Mode sombre
+@media (prefers-color-scheme: dark) {
+  body {
+    color: $text-color-light;
+    background-color: $background-color-dark;
+  }
+
+  a {
+    color: $accent-color-dark;
+  }
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
