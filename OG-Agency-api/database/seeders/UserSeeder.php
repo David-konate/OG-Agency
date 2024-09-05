@@ -22,6 +22,9 @@ class UserSeeder extends Seeder
             'slug' => Str::slug('daouda'),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'google_id' => null,
 
         ]);
     }

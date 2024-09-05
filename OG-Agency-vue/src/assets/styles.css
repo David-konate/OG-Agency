@@ -1,0 +1,30 @@
+body {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #2b2d42;
+  background-color: #edf2f4;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+a {
+  color: #ef233c;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+a:hover {
+  color: #d00f27;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #ffffff;
+    background-color: #1a1c29;
+  }
+  a {
+    color: #d90429;
+  }
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;/*# sourceMappingURL=styles.css.map */

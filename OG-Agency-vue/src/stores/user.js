@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import axios from "../services/axios";
 import { useCookies } from "vue3-cookies";
 import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 import router from "@/router"; // Importez le routeur Vue
 
 const { cookies } = useCookies();
@@ -16,10 +17,11 @@ export const useUserStore = defineStore("user", {
     async login(email, password) {
       try {
         // Envoyer une requête POST à l'endpoint de login avec l'email et le mot de passe
-        const response = await axios.post("/security/login", {
+        const response = await axios.post("security/login", {
           email,
           password,
         });
+
         // Stocker les informations de l'utilisateur et le jeton dans l'état
         this.user = response.data.user;
         this.token = response.data.token;
