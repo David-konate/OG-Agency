@@ -4,6 +4,8 @@ import AuthView from "../views/AuthView.vue";
 import MentionView from "../views/MentionView.vue";
 import CookiesView from "@/views/CookiesView.vue";
 import CGUView from "@/views/CGUView.vue";
+import OffreView from "@/views/OffreView.vue";
+import ContactView from "@/views/ContactView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +34,16 @@ const router = createRouter({
       path: "/CGU",
       name: "C.G.U.",
       component: CGUView,
+    },
+    {
+      path: "/contact",
+      name: "contact",
+      component: ContactView,
+    },
+    {
+      path: "/offres",
+      name: "offres",
+      component: OffreView,
     },
   ],
 });

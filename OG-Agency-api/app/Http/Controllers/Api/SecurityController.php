@@ -34,11 +34,12 @@ class SecurityController extends Controller
         }
 
         $user = User::where("email", $request->email)->first();
+        // Dans la méthode login du SecurityController
         return response()->json([
             "status" => true,
             "message" => "User connecté",
             "user" => $user,
-            "token" => $user->createToken("API TOKEN")->plainTextToken
+            "token" => $user->createToken("API TOKEN", ['*'], now()->addHours(12))->plainTextToken
         ], 200);
     }
 
@@ -88,5 +89,15 @@ class SecurityController extends Controller
         $request->user()->tokens()->delete();
 
         return response()->json(['message' => 'Deconnexion']);
+    }
+    public function user(Request $request)
+    {
+        $user = $request->user(); // Récupère l'utilisateur actuellement authentifié
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Détails de l\'utilisateur récupérés avec succès',
+            'user' => $user
+        ], 200);
     }
 }

@@ -3,63 +3,45 @@ import axios from "../services/axios";
 import { useCookies } from "vue3-cookies";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
-import router from "@/router"; // Importez le routeur Vue
+import router from "@/router";
 
 const { cookies } = useCookies();
 
 export const useUserStore = defineStore("user", {
   state: () => ({
+    connect: false, // Ajout de la gestion de l'état connecté
     user: null,
-    token: null,
+    token: cookies.get("cookies") || null,
+    tokenExpiration: cookies.get("tokenExpiration") || null,
     errors: null,
   }),
   actions: {
     async login(email, password) {
       try {
-        // Envoyer une requête POST à l'endpoint de login avec l'email et le mot de passe
         const response = await axios.post("security/login", {
           email,
           password,
         });
 
-        // Stocker les informations de l'utilisateur et le jeton dans l'état
         this.user = response.data.user;
         this.token = response.data.token;
-        // Définir un cookie avec le jeton d'authentification
+
+        // Stocker le token et l'heure d'expiration dans les cookies
+        const expiration = new Date();
+        expiration.setHours(expiration.getHours() + 12); // Expire dans 12 heures
         cookies.set("cookies", this.token);
-        // Ajouter le jeton aux en-têtes d'autorisation pour les futures requêtes
+        cookies.set("tokenExpiration", expiration);
+
+        // Mettre à jour l'état connecté
+        this.connect = true;
+
         axios.defaults.headers.common["Authorization"] = `Bearer ${this.token}`;
-        // Afficher un message de succès
         toast.success("Connexion réussie !");
-        // Naviguer vers la page d'accueil
         router.push("/");
       } catch (error) {
-        // Stocker les erreurs dans l'état
         this.errors = error.response?.data?.errors || "Erreur inconnue";
-        // Afficher un message d'erreur
         toast.error(
           "Erreur lors de la connexion : " +
-            (error.response?.data?.message || "Veuillez réessayer.")
-        );
-      }
-    },
-
-    async register(name, email, password) {
-      try {
-        const response = await axios.post("/security/register", {
-          name,
-          email,
-          password,
-        });
-        this.user = response.data.user;
-        this.token = response.data.token;
-        axios.defaults.headers.common["Authorization"] = `Bearer ${this.token}`;
-        toast.success("Inscription réussie !");
-        router.push("/");
-      } catch (error) {
-        this.errors = error.response?.data?.errors || "Erreur inconnue";
-        toast.error(
-          "Erreur lors de l'inscription : " +
             (error.response?.data?.message || "Veuillez réessayer.")
         );
       }
@@ -71,9 +53,14 @@ export const useUserStore = defineStore("user", {
         this.user = null;
         this.token = null;
         cookies.delete("cookies");
+        cookies.delete("tokenExpiration");
+
+        // Mettre à jour l'état connecté
+        this.connect = false;
+
         delete axios.defaults.headers.common["Authorization"];
         toast.success("Déconnexion réussie !");
-        router.push("/");
+        router.push("/login");
       } catch (error) {
         this.errors = error.response?.data?.errors || "Erreur inconnue";
         toast.error(
@@ -83,28 +70,33 @@ export const useUserStore = defineStore("user", {
       }
     },
 
-    async loginWithGoogle(user) {
-      const name = user.name;
-      const email = user.email;
-      const google_id = user.sub;
-      try {
-        const response = await axios.post("/security/google", {
-          name,
-          email,
-          google_id,
-        });
-        this.user = response.data.user;
-        this.token = response.data.token;
-        cookies.set("cookies", this.token);
-        axios.defaults.headers.common["Authorization"] = `Bearer ${this.token}`;
-        toast.success("Connexion avec Google réussie !");
-        router.push("/");
-      } catch (error) {
-        this.errors = error.response?.data?.errors || "Erreur inconnue";
-        toast.error(
-          "Erreur lors de la connexion avec Google : " +
-            (error.response?.data?.message || "Veuillez réessayer.")
-        );
+    async checkAuth() {
+      // Vérifier si les cookies nécessaires existent
+      const token = cookies.get("cookies");
+      const tokenExpiration = cookies.get("tokenExpiration");
+
+      // Si le cookie du token et le cookie de l'expiration existent
+      if (token && tokenExpiration) {
+        const expiration = new Date(tokenExpiration);
+        const now = new Date();
+
+        if (expiration > now) {
+          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+          try {
+            const response = await axios.get("/security/user");
+            this.user = response.data.user;
+
+            // Mettre à jour l'état connecté si l'utilisateur est encore valide
+            this.connect = true;
+          } catch (error) {
+            this.logout(); // Si la requête échoue, on déconnecte l'utilisateur
+          }
+        } else {
+          this.logout(); // Si le token a expiré, on déconnecte l'utilisateur
+        }
+      } else {
+        // Si les cookies sont manquants, ne rien faire. On peut choisir de définir `this.connect` à false ici si souhaité.
+        this.connect = false;
       }
     },
   },

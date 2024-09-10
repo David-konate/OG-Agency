@@ -2,6 +2,16 @@
 import { RouterView } from 'vue-router'
 import NavBar from './components/NavBar.vue'
 import Footer from './components/Footer.vue'
+import { useUserStore } from "@/stores/user";
+import { onMounted } from "vue";
+
+// Récupération du store utilisateur
+const userStore = useUserStore();
+
+// Vérification de l'authentification lors du montage du composant
+onMounted(() => {
+  userStore.checkAuth();
+});
 </script>
 
 <template>

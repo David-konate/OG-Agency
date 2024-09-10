@@ -114,6 +114,14 @@ const messages = {
       phone: "Phone: 123-456-7890",
       prompt_reply: "We will do our best to respond promptly to your inquiry.",
     },
+    test: {
+      lorem:
+        " upon the last undertaking, the Board of Trade required that the ship's hull should undergo a strict examination. This costly operation accomplished, a long crack in her exterior plates was carefully repaired at a great expense, and the next proceeding was to fix the new boilers; the driving main-shaft of the wheels, which had been damaged during the last voyage, had to be replaced by a shaft, provided with two eccentric wheels, which insured the solidity of this important part. And now for the first time the 'Great Eastern' ",
+    },
+    quill: {
+      french_title: "French",
+      english_title: "English",
+    },
   },
   fr: {
     welcome: "Bienvenue",
@@ -226,6 +234,14 @@ const messages = {
       phone: "Téléphone : 123-456-7890",
       prompt_reply:
         "Nous ferons de notre mieux pour répondre rapidement à votre demande.",
+    },
+    test: {
+      lorem:
+        "cune hypocrisie ne venait altérer la pureté de cette âme naïve, égarée par une passion qu’elle n’avait jamais éprouvée. Elle était trompée, mais à son insu, et cependant un instinct de vertu était effrayé. Tels étaient les combats qui l’agitaient quand Julien parut au jardin. Elle l’entendit parler, presque au même instant elle le vit s’asseoir à ses côtés. Son âme fut comme enlevée par ce bonheur charmant qui depuis quinze jours l’étonnait plus encore qu’il ne la séduisait. Tout était imprévu pour elle. Cependant après quelques instants, il suffit donc, se dit-elle, de la présence ",
+    },
+    quill: {
+      french_title: "Français",
+      english_title: "Anglais",
     },
   },
 };

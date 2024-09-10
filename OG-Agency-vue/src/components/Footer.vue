@@ -24,7 +24,7 @@
                     <a href="/CGU" class="hover:underline me-4 lg:me-6 text-white">{{ $t('footer.cgu') }}</a>
                 </li>
                 <li>
-                    <a href="tel:+33650017339" class="hover:underline me-4 lg:me-6 text-white">{{
+                    <a href="/contact" class="hover:underline me-4 lg:me-6 text-white">{{
                         $t('navigation.contact') }}</a>
                 </li>
             </ul>

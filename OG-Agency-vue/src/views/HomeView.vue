@@ -1,7 +1,7 @@
 <script setup>
 import { useI18n } from 'vue-i18n';
 import { onMounted } from 'vue';
-import ContactForm from '../components/forms/ContactForm.vue'
+import Test from '../components/Test.vue'
 // Accéder aux méthodes de localisation avec vue-i18n
 const { t } = useI18n();
 
@@ -14,6 +14,6 @@ onMounted(() => {
   <div>
     <h1>{{ t('welcome') }}</h1>
     <p>{{ t('hello') }}</p>
-    <ContactForm />
+    <Test />
   </div>
 </template>

@@ -3,7 +3,7 @@
         <div class="flex justify-between items-center max-w-screen-xl mx-auto px-4 py-4">
             <!-- Logo et Titre -->
             <router-link to="/" class="flex items-center">
-                <img class="gradient-background h-28 w-auto rounded-xl" src="@/assets/logo.svg" alt="logo" />
+                <img class="gradient-background h-20 w-auto rounded-xl" src="@/assets/logo.svg" alt="logo" />
                 <h4 class="title text-xl font-bold ms-5 italic flex-grow">
                     O&G - Agency
                 </h4>
@@ -42,7 +42,7 @@ const { t, locale } = useI18n(); // Utiliser la fonction de traduction (t)
 // Définition des liens avec des clés de traduction
 const links = [
     { key: 'navigation.home', path: '/' },
-    { key: 'navigation.offer', path: '/offre' },
+    { key: 'navigation.offer', path: '/offres' },
     { key: 'navigation.about', path: '/a-propos' },
     { key: 'navigation.contact', path: '/contact' },
 ];
